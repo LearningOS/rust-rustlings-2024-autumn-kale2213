@@ -2,7 +2,6 @@
 	graph
 	This problem requires you to implement a basic graph functio
 */
-// I AM NOT DONE
 
 use std::collections::{HashMap, HashSet};
 use std::fmt;
@@ -30,6 +29,17 @@ impl Graph for UndirectedGraph {
     }
     fn add_edge(&mut self, edge: (&str, &str, i32)) {
         //TODO
+        let (node1, node2, weight) = edge;
+
+        // 给node1添加到node2的边
+        self.adjacency_table.entry(node1.to_string())
+            .or_insert_with(Vec::new)
+            .push((node2.to_string(), weight));
+
+        // 由于是无向图，还需要给node2添加到node1的边
+        self.adjacency_table.entry(node2.to_string())
+            .or_insert_with(Vec::new)
+            .push((node1.to_string(), weight));
     }
 }
 pub trait Graph {
